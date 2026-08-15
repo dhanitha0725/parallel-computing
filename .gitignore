@@ -1,0 +1,23 @@
+# Large datasets (1.7 GB full SUSY dataset)
+data/supersymmetry_dataset.csv
+
+# Compiled binaries and build outputs
+bin/
+*.exe
+*.o
+*.obj
+*.out
+
+# Benchmark results / summary logs
+benchmark_summary.csv
+
+# IDE and Editor configurations
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS specific files
+Thumbs.db
+Desktop.ini
+.DS_Store
