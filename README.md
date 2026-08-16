@@ -69,9 +69,15 @@ Each query instance's nearest neighbors can be computed independently, making th
 
 ### Manual Execution (Linux / WSL):
 ```bash
-# 1. Compile binaries
+# 1. Install compiler if missing (Ubuntu/Debian/WSL)
+sudo apt-get update
+sudo apt-get install -y build-essential
+
+# 2. Compile binaries
 ./scripts/build.sh
 
-# 2. Run full benchmark suite
+# 3. Run full benchmark suite
 ./scripts/run_all.sh
 ```
+
+The build script now also detects when `g++` is missing and installs the required toolchain automatically.
