@@ -1,8 +1,60 @@
 #!/bin/bash
 set -e
 
+ensure_compiler() {
+    if command -v g++ >/dev/null 2>&1; then
+        return 0
+    fi
+
+    echo "[!] g++ not found. Installing C/C++ build tools..."
+
+    if command -v pacman >/dev/null 2>&1; then
+        if command -v sudo >/dev/null 2>&1; then
+            sudo pacman -S --needed --noconfirm base-devel gcc
+        else
+            pacman -S --needed --noconfirm base-devel gcc
+        fi
+    elif command -v apt-get >/dev/null 2>&1; then
+        if command -v sudo >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y build-essential
+        else
+            apt-get update
+            apt-get install -y build-essential
+        fi
+    elif command -v dnf >/dev/null 2>&1; then
+        if command -v sudo >/dev/null 2>&1; then
+            sudo dnf groupinstall -y "Development Tools"
+        else
+            dnf groupinstall -y "Development Tools"
+        fi
+    elif command -v yum >/dev/null 2>&1; then
+        if command -v sudo >/dev/null 2>&1; then
+            sudo yum groupinstall -y "Development Tools"
+        else
+            yum groupinstall -y "Development Tools"
+        fi
+    elif command -v apk >/dev/null 2>&1; then
+        if command -v sudo >/dev/null 2>&1; then
+            sudo apk add --no-cache build-base
+        else
+            apk add --no-cache build-base
+        fi
+    else
+        echo "[ERROR] No supported package manager found. Please install g++ manually."
+        exit 1
+    fi
+
+    if ! command -v g++ >/dev/null 2>&1; then
+        echo "[ERROR] g++ installation failed or is not on PATH."
+        exit 1
+    fi
+}
+
 # Change directory to project root
 cd "$(dirname "$0")/.."
+
+ensure_compiler
 
 mkdir -p bin
 mkdir -p data
