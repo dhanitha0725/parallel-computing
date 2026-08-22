@@ -83,7 +83,6 @@ inline double squared_euclidean_distance(const double* a, const double* b, int d
     return sum;
 }
 
-// Function to load the SUSY dataset (with optional max_rows limit)
 inline bool load_susy_csv(const std::string& filename,
                           std::vector<Event>& dataset,
                           size_t max_rows = 25000) {
@@ -114,12 +113,10 @@ inline bool load_susy_csv(const std::string& filename,
         std::stringstream ss(line);
         std::string token;
         
-        // Read label (first column)
         if (!std::getline(ss, token, ',')) continue;
         double raw_label = std::stod(token);
         int label = (raw_label >= 0.5) ? 1 : 0;
 
-        // Read 18 numerical features
         std::vector<double> features(NUM_FEATURES);
         bool valid_row = true;
         for (int i = 0; i < NUM_FEATURES; ++i) {
@@ -146,7 +143,6 @@ inline bool load_susy_csv(const std::string& filename,
     return !dataset.empty();
 }
 
-// Standardization: (x - mean) / std_dev for each feature
 inline void standardize_dataset(std::vector<Event>& train_data, std::vector<Event>& test_data) {
     if (train_data.empty()) return;
 
