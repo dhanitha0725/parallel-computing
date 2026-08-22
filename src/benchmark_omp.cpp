@@ -67,7 +67,7 @@ int main(int argc, char* argv[]) {
     std::vector<int> seq_predictions(n_test, 0);
     double ts_ms = 0.0;
 
-    // 3. Run Sequential Baseline (1 Thread)
+    // 3. Run Sequential method
     std::cout << "[Step 3] Running Sequential Baseline (1 Thread)..." << std::flush;
     {
         double t0 = omp_get_wtime();
@@ -113,7 +113,7 @@ int main(int argc, char* argv[]) {
                   << (mismatches == 0 ? "100% MATCH" : "FAILED") << ").\n";
     }
 
-    // 5. Display Formatted Results Table (Matching requested layout)
+    // 5. Display Formatted Results Table
     std::cout << "\n=========================================================================\n";
     std::cout << "                          FINAL EXPERIMENTAL RESULTS                     \n";
     std::cout << "=========================================================================\n\n";
@@ -142,7 +142,6 @@ int main(int argc, char* argv[]) {
     }
     std::cout << "=========================================================================\n";
 
-    // Write to CSV
     std::ofstream csv("benchmark_summary.csv");
     if (csv.is_open()) {
         csv << "Implementation,Threads,Time_ms,Speedup,Efficiency_percent,Accuracy_percent\n";
